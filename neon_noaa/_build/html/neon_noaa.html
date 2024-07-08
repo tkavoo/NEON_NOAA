@@ -1,0 +1,944 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Quantifying NEON Precipitation Uncertainty using NOAA-GHCND &#8212; Quantifying NEON Precipitation Uncertainty using NOAA-GHCND</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'neon_noaa';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/cwsnew.png" class="logo__image only-light" alt="Quantifying NEON Precipitation Uncertainty using NOAA-GHCND - Home"/>
+    <script>document.write(`<img src="_static/cwsnew.png" class="logo__image only-dark" alt="Quantifying NEON Precipitation Uncertainty using NOAA-GHCND - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1 current active">
+                <a class="reference internal" href="#">
+                    Quantifying NEON Precipitation Uncertainty using NOAA-GHCND
+                </a>
+            </li>
+        </ul>
+        
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/cwslab/neon_noaa" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/cwslab/neon_noaa/issues/new?title=Issue%20on%20page%20%2Fneon_noaa.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/neon_noaa.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Quantifying NEON Precipitation Uncertainty using NOAA-GHCND</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#downloading-neon-data">1. Downloading NEON Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-noaa-ghcnd-station">2. Finding NOAA GHCND Station</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#downloading-noaa-data">3. Downloading NOAA Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-datasets">4. Combining Datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-visualization">5. Data Visualization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-statistics">6. Summary Statistics</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="quantifying-neon-precipitation-uncertainty-using-noaa-ghcnd">
+<h1>Quantifying NEON Precipitation Uncertainty using NOAA-GHCND<a class="headerlink" href="#quantifying-neon-precipitation-uncertainty-using-noaa-ghcnd" title="Link to this heading">#</a></h1>
+<p>In this tutorial, we are going to demonstrate a step by step process on how to quantify <a class="reference external" href="https://data.neonscience.org/data-products/DP1.00006.001">NEON</a> precipitation data uncertainty using <a class="reference external" href="https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00861">NOAA-GHCND</a> data. Here, you will learn how to download <code class="docutils literal notranslate"><span class="pre">NEON</span></code> precipitation data for any <code class="docutils literal notranslate"><span class="pre">NEON</span> <span class="pre">Station</span></code>. The NEON-Data download code block borrows from our <a class="reference external" href="https://cwslab.github.io/NEONDATA/index.html">previous tutorial</a> which describes all the steps taken to download these data products. Please remember to check our <a class="reference external" href="https://cwslab.github.io/NEONDATA/index.html">previous tutorial</a> for a detailed description and steps on how to download any NEON-Data product.</p>
+<section id="downloading-neon-data">
+<h2>1. Downloading NEON Data<a class="headerlink" href="#downloading-neon-data" title="Link to this heading">#</a></h2>
+<p>In this demonstration, we shall access and download <strong>TALL-NEON Precipitation data</strong>. This code can however be applied to download any NEON station by just changing the <code class="docutils literal notranslate"><span class="pre">neon_site</span></code> name to the <a class="reference external" href="https://www.neonscience.org/field-sites/explore-field-sites">location</a> you prefer.</p>
+<p><strong>Loading the necessary packages</strong></p>
+<div class="alert alert-block alert-info">
+<b>NOTE:</b> Remember to check our <a href="https://cwslab.github.io/NEONDATA/index.html" title=”neon_data_tutorial)”>Previous Tutorial</a> for a detailed explanation on downloading NEON datasets.</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">rpy2.robjects.packages</span> <span class="kn">import</span> <span class="n">importr</span>
+<span class="kn">from</span> <span class="nn">rpy2.rinterface_lib.callbacks</span> <span class="kn">import</span> <span class="n">logger</span> <span class="k">as</span> <span class="n">rpy2_logger</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;R_HOME&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;/Library/Frameworks/R.framework/Resources&#39;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;font.weight&quot;</span><span class="p">:</span> <span class="s2">&quot;bold&quot;</span><span class="p">,</span> <span class="s2">&quot;axes.labelweight&quot;</span><span class="p">:</span> <span class="s2">&quot;bold&quot;</span><span class="p">,</span> <span class="s2">&quot;font.size&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">})</span>
+
+<span class="n">rpy2_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+<span class="n">neonUtilities</span> <span class="o">=</span> <span class="n">importr</span><span class="p">(</span><span class="s1">&#39;neonUtilities&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Loading the necessary packages</strong></p>
+<p>Using the <code class="docutils literal notranslate"><span class="pre">NEON-Utilities</span></code> package, we access and extract <code class="docutils literal notranslate"><span class="pre">TALL-NEON</span></code> precipitation data for the specified period. The <code class="docutils literal notranslate"><span class="pre">zipsbyproduct</span></code> function downloads the data while the <code class="docutils literal notranslate"><span class="pre">stackbytable</span></code> function unzips the downloaded data and consolidates it into a single file. Further details and explannation of these functions and packages can be found <a class="reference external" href="https://cwslab.github.io/NEONDATA/index.html">here</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Downloading precipitation data</span>
+<span class="n">neon_site</span> <span class="o">=</span> <span class="s1">&#39;TALL&#39;</span>
+<span class="n">neonUtilities</span><span class="o">.</span><span class="n">zipsByProduct</span><span class="p">(</span><span class="n">dpID</span><span class="o">=</span><span class="s1">&#39;DP1.00006.001&#39;</span><span class="p">,</span> <span class="n">startdate</span><span class="o">=</span><span class="s2">&quot;2015-01&quot;</span><span class="p">,</span> <span class="n">enddate</span><span class="o">=</span><span class="s2">&quot;2023-12&quot;</span><span class="p">,</span>
+                            <span class="n">site</span><span class="o">=</span><span class="n">importr</span><span class="p">(</span><span class="s1">&#39;base&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">c</span><span class="p">(</span><span class="n">neon_site</span><span class="p">),</span> <span class="n">savepath</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">package</span><span class="o">=</span><span class="s1">&#39;basic&#39;</span><span class="p">,</span> 
+                            <span class="n">timeIndex</span><span class="o">=</span><span class="s1">&#39;30&#39;</span><span class="p">,</span> <span class="n">check_size</span><span class="o">=</span><span class="s1">&#39;TRUE&#39;</span><span class="p">)</span>
+<span class="n">neonUtilities</span><span class="o">.</span><span class="n">stackByTable</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="s1">&#39;./filesToStack00006&#39;</span><span class="p">)</span>
+
+<span class="c1"># Reading the downloaded and unzipped files</span>
+<span class="n">ppt_30_Minute</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;filesToStack00006/stackedFiles/PRIPRE_30min.csv&#39;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;startDateTime&#39;</span><span class="p">])</span>
+<span class="n">ppt_30_Minute</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;startDateTime&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Filter and process data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">ppt_30_Minute</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;horizontalPosition == 900 and priPrecipFinalQF == 0&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finding available files
+  |======================================================================| 100%
+Provisional data were excluded from available files list. To download provisional data, use input parameter include.provisional=TRUE.
+Continuing will download files totaling approximately 45.958851 MB. Do you want to proceed y/n: y
+Downloading 520 files
+  |======================================================================| 100%
+520 files successfully downloaded to ./filesToStack00006
+  |                                                  | 0 % ~calculating   |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=00s  
+Stacking operation across a single core.
+Stacking table SECPRE_30min
+  |                                                  | 0 % ~calculating   |+                                                 | 1 % ~00s           |++                                                | 2 % ~00s           |++                                                | 3 % ~00s           |+++                                               | 4 % ~00s           |+++                                               | 5 % ~00s           |++++                                              | 6 % ~00s           |++++                                              | 7 % ~00s           |+++++                                             | 8 % ~00s           |+++++                                             | 9 % ~00s           |++++++                                            | 10% ~00s           |++++++                                            | 11% ~00s           |+++++++                                           | 12% ~00s           |+++++++                                           | 13% ~00s           |++++++++                                          | 14% ~00s           |++++++++                                          | 15% ~00s           |+++++++++                                         | 16% ~00s           |+++++++++                                         | 17% ~00s           |++++++++++                                        | 18% ~00s           |++++++++++                                        | 19% ~00s           |+++++++++++                                       | 20% ~00s           |+++++++++++                                       | 21% ~00s           |++++++++++++                                      | 22% ~00s           |++++++++++++                                      | 23% ~00s           |+++++++++++++                                     | 24% ~00s           |+++++++++++++                                     | 25% ~00s           |++++++++++++++                                    | 26% ~00s           |++++++++++++++                                    | 27% ~00s           |+++++++++++++++                                   | 28% ~00s           |+++++++++++++++                                   | 29% ~00s           |++++++++++++++++                                  | 30% ~00s           |++++++++++++++++                                  | 31% ~00s           |+++++++++++++++++                                 | 32% ~00s           |+++++++++++++++++                                 | 33% ~00s           |++++++++++++++++++                                | 34% ~00s           |++++++++++++++++++                                | 35% ~00s           |+++++++++++++++++++                               | 36% ~00s           |+++++++++++++++++++                               | 37% ~00s           |++++++++++++++++++++                              | 38% ~00s           |++++++++++++++++++++                              | 39% ~00s           |+++++++++++++++++++++                             | 40% ~00s           |+++++++++++++++++++++                             | 41% ~00s           |++++++++++++++++++++++                            | 42% ~00s           |++++++++++++++++++++++                            | 43% ~00s           |+++++++++++++++++++++++                           | 44% ~00s           |+++++++++++++++++++++++                           | 45% ~00s           |++++++++++++++++++++++++                          | 46% ~00s           |++++++++++++++++++++++++                          | 47% ~00s           |+++++++++++++++++++++++++                         | 48% ~00s           |+++++++++++++++++++++++++                         | 49% ~00s           |++++++++++++++++++++++++++                        | 51% ~00s           |++++++++++++++++++++++++++                        | 52% ~00s           |+++++++++++++++++++++++++++                       | 53% ~00s           |+++++++++++++++++++++++++++                       | 54% ~00s           |++++++++++++++++++++++++++++                      | 55% ~00s           |++++++++++++++++++++++++++++                      | 56% ~00s           |+++++++++++++++++++++++++++++                     | 57% ~00s           |+++++++++++++++++++++++++++++                     | 58% ~00s           |++++++++++++++++++++++++++++++                    | 59% ~00s           |++++++++++++++++++++++++++++++                    | 60% ~00s           |+++++++++++++++++++++++++++++++                   | 61% ~00s           |+++++++++++++++++++++++++++++++                   | 62% ~00s           |++++++++++++++++++++++++++++++++                  | 63% ~00s           |++++++++++++++++++++++++++++++++                  | 64% ~00s           |+++++++++++++++++++++++++++++++++                 | 65% ~00s           |+++++++++++++++++++++++++++++++++                 | 66% ~00s           |++++++++++++++++++++++++++++++++++                | 67% ~00s           |++++++++++++++++++++++++++++++++++                | 68% ~00s           |+++++++++++++++++++++++++++++++++++               | 69% ~00s           |+++++++++++++++++++++++++++++++++++               | 70% ~00s           |++++++++++++++++++++++++++++++++++++              | 71% ~00s           |++++++++++++++++++++++++++++++++++++              | 72% ~00s           |+++++++++++++++++++++++++++++++++++++             | 73% ~00s           |+++++++++++++++++++++++++++++++++++++             | 74% ~00s           |++++++++++++++++++++++++++++++++++++++            | 75% ~00s           |++++++++++++++++++++++++++++++++++++++            | 76% ~00s           |+++++++++++++++++++++++++++++++++++++++           | 77% ~00s           |+++++++++++++++++++++++++++++++++++++++           | 78% ~00s           |++++++++++++++++++++++++++++++++++++++++          | 79% ~00s           |++++++++++++++++++++++++++++++++++++++++          | 80% ~00s           |+++++++++++++++++++++++++++++++++++++++++         | 81% ~00s           |+++++++++++++++++++++++++++++++++++++++++         | 82% ~00s           |++++++++++++++++++++++++++++++++++++++++++        | 83% ~00s           |++++++++++++++++++++++++++++++++++++++++++        | 84% ~00s           |+++++++++++++++++++++++++++++++++++++++++++       | 85% ~00s           |+++++++++++++++++++++++++++++++++++++++++++       | 86% ~00s           |++++++++++++++++++++++++++++++++++++++++++++      | 87% ~00s           |++++++++++++++++++++++++++++++++++++++++++++      | 88% ~00s           |+++++++++++++++++++++++++++++++++++++++++++++     | 89% ~00s           |+++++++++++++++++++++++++++++++++++++++++++++     | 90% ~00s           |++++++++++++++++++++++++++++++++++++++++++++++    | 91% ~00s           |++++++++++++++++++++++++++++++++++++++++++++++    | 92% ~00s           |+++++++++++++++++++++++++++++++++++++++++++++++   | 93% ~00s           |+++++++++++++++++++++++++++++++++++++++++++++++   | 94% ~00s           |++++++++++++++++++++++++++++++++++++++++++++++++  | 95% ~00s           |++++++++++++++++++++++++++++++++++++++++++++++++  | 96% ~00s           |+++++++++++++++++++++++++++++++++++++++++++++++++ | 97% ~00s           |+++++++++++++++++++++++++++++++++++++++++++++++++ | 98% ~00s           |++++++++++++++++++++++++++++++++++++++++++++++++++| 99% ~00s           |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=00s  
+Stacking table THRPRE_30min
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  |                                                  | 0 % ~calculating   |+                                                 | 1 % ~01s           |++                                                | 2 % ~03s           |++                                                | 3 % ~02s           |+++                                               | 5 % ~02s           |+++                                               | 6 % ~02s           |++++                                              | 7 % ~01s           |+++++                                             | 8 % ~01s           |+++++                                             | 9 % ~01s           |++++++                                            | 10% ~01s           |++++++                                            | 11% ~01s           |+++++++                                           | 13% ~01s           |+++++++                                           | 14% ~01s           |++++++++                                          | 15% ~01s           |+++++++++                                         | 16% ~01s           |+++++++++                                         | 17% ~01s           |++++++++++                                        | 18% ~01s           |++++++++++                                        | 20% ~01s           |+++++++++++                                       | 21% ~01s           |+++++++++++                                       | 22% ~01s           |++++++++++++                                      | 23% ~01s           |+++++++++++++                                     | 24% ~01s           |+++++++++++++                                     | 25% ~01s           |++++++++++++++                                    | 26% ~01s           |++++++++++++++                                    | 28% ~01s           |+++++++++++++++                                   | 29% ~01s           |+++++++++++++++                                   | 30% ~01s           |++++++++++++++++                                  | 31% ~01s           |+++++++++++++++++                                 | 32% ~01s           |+++++++++++++++++                                 | 33% ~01s           |++++++++++++++++++                                | 34% ~01s           |++++++++++++++++++                                | 36% ~01s           |+++++++++++++++++++                               | 37% ~01s           |+++++++++++++++++++                               | 38% ~01s           |++++++++++++++++++++                              | 39% ~01s           |+++++++++++++++++++++                             | 40% ~01s           |+++++++++++++++++++++                             | 41% ~01s           |++++++++++++++++++++++                            | 43% ~01s           |++++++++++++++++++++++                            | 44% ~01s           |+++++++++++++++++++++++                           | 45% ~01s           |+++++++++++++++++++++++                           | 46% ~01s           |++++++++++++++++++++++++                          | 47% ~01s           |+++++++++++++++++++++++++                         | 48% ~00s           |+++++++++++++++++++++++++                         | 49% ~00s           |++++++++++++++++++++++++++                        | 51% ~00s           |++++++++++++++++++++++++++                        | 52% ~00s           |+++++++++++++++++++++++++++                       | 53% ~00s           |++++++++++++++++++++++++++++                      | 54% ~00s           |++++++++++++++++++++++++++++                      | 55% ~00s           |+++++++++++++++++++++++++++++                     | 56% ~00s           |+++++++++++++++++++++++++++++                     | 57% ~00s           |++++++++++++++++++++++++++++++                    | 59% ~00s           |++++++++++++++++++++++++++++++                    | 60% ~00s           |+++++++++++++++++++++++++++++++                   | 61% ~00s           |++++++++++++++++++++++++++++++++                  | 62% ~00s           |++++++++++++++++++++++++++++++++                  | 63% ~00s           |+++++++++++++++++++++++++++++++++                 | 64% ~00s           |+++++++++++++++++++++++++++++++++                 | 66% ~00s           |++++++++++++++++++++++++++++++++++                | 67% ~00s           |++++++++++++++++++++++++++++++++++                | 68% ~00s           |+++++++++++++++++++++++++++++++++++               | 69% ~00s           |++++++++++++++++++++++++++++++++++++              | 70% ~00s           |++++++++++++++++++++++++++++++++++++              | 71% ~00s           |+++++++++++++++++++++++++++++++++++++             | 72% ~00s           |+++++++++++++++++++++++++++++++++++++             | 74% ~00s           |++++++++++++++++++++++++++++++++++++++            | 75% ~00s           |++++++++++++++++++++++++++++++++++++++            | 76% ~00s           |+++++++++++++++++++++++++++++++++++++++           | 77% ~00s           |++++++++++++++++++++++++++++++++++++++++          | 78% ~00s           |++++++++++++++++++++++++++++++++++++++++          | 79% ~00s           |+++++++++++++++++++++++++++++++++++++++++         | 80% ~00s           |+++++++++++++++++++++++++++++++++++++++++         | 82% ~00s           |++++++++++++++++++++++++++++++++++++++++++        | 83% ~00s           |++++++++++++++++++++++++++++++++++++++++++        | 84% ~00s           |+++++++++++++++++++++++++++++++++++++++++++       | 85% ~00s           |++++++++++++++++++++++++++++++++++++++++++++      | 86% ~00s           |++++++++++++++++++++++++++++++++++++++++++++      | 87% ~00s           |+++++++++++++++++++++++++++++++++++++++++++++     | 89% ~00s           |+++++++++++++++++++++++++++++++++++++++++++++     | 90% ~00s           |++++++++++++++++++++++++++++++++++++++++++++++    | 91% ~00s           |++++++++++++++++++++++++++++++++++++++++++++++    | 92% ~00s           |+++++++++++++++++++++++++++++++++++++++++++++++   | 93% ~00s           |++++++++++++++++++++++++++++++++++++++++++++++++  | 94% ~00s           |++++++++++++++++++++++++++++++++++++++++++++++++  | 95% ~00s           |+++++++++++++++++++++++++++++++++++++++++++++++++ | 97% ~00s           |+++++++++++++++++++++++++++++++++++++++++++++++++ | 98% ~00s           |++++++++++++++++++++++++++++++++++++++++++++++++++| 99% ~00s           |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=01s  
+Stacking table PRIPRE_30min
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  |                                                  | 0 % ~calculating   |+                                                 | 1 % ~00s           |++                                                | 3 % ~00s           |+++                                               | 4 % ~00s           |+++                                               | 6 % ~00s           |++++                                              | 7 % ~00s           |+++++                                             | 8 % ~00s           |+++++                                             | 10% ~00s           |++++++                                            | 11% ~00s           |+++++++                                           | 12% ~00s           |+++++++                                           | 14% ~00s           |++++++++                                          | 15% ~00s           |+++++++++                                         | 17% ~00s           |++++++++++                                        | 18% ~00s           |++++++++++                                        | 19% ~00s           |+++++++++++                                       | 21% ~00s           |++++++++++++                                      | 22% ~00s           |++++++++++++                                      | 24% ~00s           |+++++++++++++                                     | 25% ~00s           |++++++++++++++                                    | 26% ~00s           |++++++++++++++                                    | 28% ~00s           |+++++++++++++++                                   | 29% ~00s           |++++++++++++++++                                  | 31% ~00s           |++++++++++++++++                                  | 32% ~00s           |+++++++++++++++++                                 | 33% ~00s           |++++++++++++++++++                                | 35% ~00s           |+++++++++++++++++++                               | 36% ~00s           |+++++++++++++++++++                               | 38% ~00s           |++++++++++++++++++++                              | 39% ~00s           |+++++++++++++++++++++                             | 40% ~00s           |+++++++++++++++++++++                             | 42% ~00s           |++++++++++++++++++++++                            | 43% ~00s           |+++++++++++++++++++++++                           | 44% ~00s           |+++++++++++++++++++++++                           | 46% ~00s           |++++++++++++++++++++++++                          | 47% ~00s           |+++++++++++++++++++++++++                         | 49% ~00s           |+++++++++++++++++++++++++                         | 50% ~00s           |++++++++++++++++++++++++++                        | 51% ~00s           |+++++++++++++++++++++++++++                       | 53% ~00s           |++++++++++++++++++++++++++++                      | 54% ~00s           |++++++++++++++++++++++++++++                      | 56% ~00s           |+++++++++++++++++++++++++++++                     | 57% ~00s           |++++++++++++++++++++++++++++++                    | 58% ~00s           |++++++++++++++++++++++++++++++                    | 60% ~00s           |+++++++++++++++++++++++++++++++                   | 61% ~00s           |++++++++++++++++++++++++++++++++                  | 62% ~00s           |++++++++++++++++++++++++++++++++                  | 64% ~00s           |+++++++++++++++++++++++++++++++++                 | 65% ~00s           |++++++++++++++++++++++++++++++++++                | 67% ~00s           |+++++++++++++++++++++++++++++++++++               | 68% ~00s           |+++++++++++++++++++++++++++++++++++               | 69% ~00s           |++++++++++++++++++++++++++++++++++++              | 71% ~00s           |+++++++++++++++++++++++++++++++++++++             | 72% ~00s           |+++++++++++++++++++++++++++++++++++++             | 74% ~00s           |++++++++++++++++++++++++++++++++++++++            | 75% ~00s           |+++++++++++++++++++++++++++++++++++++++           | 76% ~00s           |+++++++++++++++++++++++++++++++++++++++           | 78% ~00s           |++++++++++++++++++++++++++++++++++++++++          | 79% ~00s           |+++++++++++++++++++++++++++++++++++++++++         | 81% ~00s           |+++++++++++++++++++++++++++++++++++++++++         | 82% ~00s           |++++++++++++++++++++++++++++++++++++++++++        | 83% ~00s           |+++++++++++++++++++++++++++++++++++++++++++       | 85% ~00s           |++++++++++++++++++++++++++++++++++++++++++++      | 86% ~00s           |++++++++++++++++++++++++++++++++++++++++++++      | 88% ~00s           |+++++++++++++++++++++++++++++++++++++++++++++     | 89% ~00s           |++++++++++++++++++++++++++++++++++++++++++++++    | 90% ~00s           |++++++++++++++++++++++++++++++++++++++++++++++    | 92% ~00s           |+++++++++++++++++++++++++++++++++++++++++++++++   | 93% ~00s           |++++++++++++++++++++++++++++++++++++++++++++++++  | 94% ~00s           |++++++++++++++++++++++++++++++++++++++++++++++++  | 96% ~00s           |+++++++++++++++++++++++++++++++++++++++++++++++++ | 97% ~00s           |++++++++++++++++++++++++++++++++++++++++++++++++++| 99% ~00s           |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=00s  
+Merged the most recent publication of sensor position files for each site and saved to /stackedFiles
+Copied the most recent publication of variable definition file to /stackedFiles
+Finished: Stacked 3 data tables and 3 metadata tables!
+Stacking took 2.765169 secs
+All unzipped monthly data folders have been removed.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="finding-noaa-ghcnd-station">
+<h2>2. Finding NOAA GHCND Station<a class="headerlink" href="#finding-noaa-ghcnd-station" title="Link to this heading">#</a></h2>
+<p>In this step, we are going to search for the nearest GHCND Station to our NEON Station with the most upto date data. You can modify the radius if the search yields nothing.</p>
+<p><strong>Define Variables</strong></p>
+<p>To request data from NOAA, we will need to request an access token, which essentially confirms that we are a trusted source asking for data: <a class="reference external" href="https://www.ncdc.noaa.gov/cdo-web/token">Request a Token here</a>.</p>
+<img src="_static/api_token.png" width="800" height="400">
+<p>Enter your email address in the space provided to receive an email containing your access token. Remember to store this token securely and keep it private to prevent unauthorized requests to NOAA.</p>
+<p>Once you have received your token, set your NOAA token and the coordinates of the location of interest. Here we are going to input the location for the <a class="reference external" href="https://www.neonscience.org/field-sites/tall">TALL-NEON Station</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">token</span> <span class="o">=</span> <span class="s1">&#39;YOUR_API_TOKEN&#39;</span>
+<span class="n">lat</span> <span class="o">=</span> <span class="mf">32.95047</span>
+<span class="n">lon</span> <span class="o">=</span> <span class="o">-</span><span class="mf">87.393259</span>
+<span class="n">radius</span> <span class="o">=</span> <span class="mi">50</span>  <span class="c1"># Radius in kilometers</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Fetch and Find Data the Closest Station</strong></p>
+<p>Fetch station data from the NOAA API within the defined bounding box and identify the closest GHCND station that has the most up-to-date data. The step ends by printing the details of the information of this station. If no GHCND station is found with the most recent data, you can change the radius to search for a wider area.</p>
+<p>Here, using the location details of the <code class="docutils literal notranslate"><span class="pre">NEON</span></code> site of interest (Latitude, Longitude and Elevation), we shall search all <code class="docutils literal notranslate"><span class="pre">NOAA</span> <span class="pre">Stations</span></code> within a specified radius. The code extracts these stations information using the <code class="docutils literal notranslate"><span class="pre">NOAA-API</span></code>. We shall then proceed to compute the elevation using the <code class="docutils literal notranslate"><span class="pre">Open-Elevation</span> <span class="pre">API</span></code>. To find the closest station, we define a score based on the distance and the elevation which helps to find the NOAA station that closely matches the NEON-site according to the latitude, longitude and elevation parameters. The code then prints the station details including <code class="docutils literal notranslate"><span class="pre">station_id</span></code>, the <code class="docutils literal notranslate"><span class="pre">distance</span></code> from NEON site, <code class="docutils literal notranslate"><span class="pre">elevation</span> <span class="pre">difference</span></code>, <code class="docutils literal notranslate"><span class="pre">start</span></code> and <code class="docutils literal notranslate"><span class="pre">end</span></code> dates of the available data records.</p>
+<p><strong>Define Functions</strong></p>
+<ul class="simple">
+<li><p>elev_by_lat_lon: Cxtracts elevation for a location given the lat, lon using the <code class="docutils literal notranslate"><span class="pre">Open</span> <span class="pre">Elevation</span> <span class="pre">API</span></code>.</p></li>
+<li><p>calc_dist: Calculate the distance between two points (lat and lon) using the Haversine formula (a more accurate way to computes distance between surface points given their cordinates):</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="k">def</span> <span class="nf">elev_by_lat_lon</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the elevation in meters for the specified latitude/longitude.</span>
+<span class="sd">    Uses Open-Elevation API for this example.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;https://api.open-elevation.com/api/v1/lookup?locations=</span><span class="si">{</span><span class="n">lat</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">lon</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="k">if</span> <span class="s1">&#39;results&#39;</span> <span class="ow">in</span> <span class="n">resp</span> <span class="ow">and</span> <span class="s1">&#39;elevation&#39;</span> <span class="ow">in</span> <span class="n">resp</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">resp</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;elevation&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+<span class="c1"># Get elevation for the given location</span>
+<span class="n">elevation</span> <span class="o">=</span> <span class="n">elev_by_lat_lon</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">)</span>
+
+<span class="c1"># Calculate distance between two points</span>
+<span class="k">def</span> <span class="nf">calc_dist</span><span class="p">(</span><span class="n">lat1</span><span class="p">,</span> <span class="n">lon1</span><span class="p">,</span> <span class="n">lat2</span><span class="p">,</span> <span class="n">lon2</span><span class="p">):</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="mi">6371</span>  <span class="c1"># Earth radius (Volumetric mean radius) in kilometers</span>
+    <span class="n">dlat</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">lat2</span> <span class="o">-</span> <span class="n">lat1</span><span class="p">)</span>
+    <span class="n">dlon</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">lon2</span> <span class="o">-</span> <span class="n">lon1</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">dlat</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">lat1</span><span class="p">))</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span>
+        <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">lat2</span><span class="p">))</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">dlon</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">atan2</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">a</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">R</span> <span class="o">*</span> <span class="n">c</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Finding the Closest Station that Matches our NEON-Site</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fetch stations data from NOAA API</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://www.ncdc.noaa.gov/cdo-web/api/v2/stations&#39;</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;extent&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">lat</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">0.5</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">lon</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">0.5</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">lat</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.5</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">lon</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.5</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s1">&#39;limit&#39;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">}</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;token&#39;</span><span class="p">:</span> <span class="n">token</span><span class="p">}</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+<span class="n">stations_data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+<span class="c1"># Find the closest GHCND station with data up to 2024 and similar elevation</span>
+<span class="n">min_score</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+<span class="n">closest_station</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="c1"># Calculate a score based on distance and elevation difference</span>
+<span class="k">def</span> <span class="nf">calc_score</span><span class="p">(</span><span class="n">distance</span><span class="p">,</span> <span class="n">elev_diff</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">distance</span> <span class="o">+</span> <span class="nb">abs</span><span class="p">(</span><span class="n">elev_diff</span><span class="p">)</span> <span class="c1"># Adjust the weighting as necessary</span>
+
+<span class="c1"># Extract relevant information and find the best station</span>
+<span class="k">if</span> <span class="s1">&#39;results&#39;</span> <span class="ow">in</span> <span class="n">stations_data</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">station</span> <span class="ow">in</span> <span class="n">stations_data</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">station</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;GHCND&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">station</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;maxdate&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="s1">&#39;2024-01-01&#39;</span><span class="p">:</span>
+            <span class="n">station_lat</span> <span class="o">=</span> <span class="n">station</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]</span>
+            <span class="n">station_lon</span> <span class="o">=</span> <span class="n">station</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]</span>
+            <span class="n">station_elev</span> <span class="o">=</span> <span class="n">elev_by_lat_lon</span><span class="p">(</span><span class="n">station_lat</span><span class="p">,</span> <span class="n">station_lon</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">station_elev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">distance</span> <span class="o">=</span> <span class="n">calc_dist</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">station_lat</span><span class="p">,</span> <span class="n">station_lon</span><span class="p">)</span>
+                <span class="n">elev_diff</span> <span class="o">=</span> <span class="n">elevation</span> <span class="o">-</span> <span class="n">station_elev</span>
+                <span class="n">score</span> <span class="o">=</span> <span class="n">calc_score</span><span class="p">(</span><span class="n">distance</span><span class="p">,</span> <span class="n">elev_diff</span><span class="p">)</span>
+                
+                <span class="k">if</span> <span class="n">distance</span> <span class="o">&lt;=</span> <span class="n">radius</span> <span class="ow">and</span> <span class="n">score</span> <span class="o">&lt;</span> <span class="n">min_score</span><span class="p">:</span>
+                    <span class="n">min_score</span> <span class="o">=</span> <span class="n">score</span>
+                    <span class="n">closest_station</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s1">&#39;Station ID&#39;</span><span class="p">:</span> <span class="n">station</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;Distance&#39;</span><span class="p">:</span> <span class="n">distance</span><span class="p">,</span>
+                        <span class="s1">&#39;Start Date&#39;</span><span class="p">:</span> <span class="n">station</span><span class="p">[</span><span class="s1">&#39;mindate&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;End Date&#39;</span><span class="p">:</span> <span class="n">station</span><span class="p">[</span><span class="s1">&#39;maxdate&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;Elevation Difference&#39;</span><span class="p">:</span> <span class="n">elev_diff</span>
+                    <span class="p">}</span>
+
+<span class="c1"># Display the closest station information</span>
+<span class="k">if</span> <span class="n">closest_station</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Closest Station ID: </span><span class="si">{</span><span class="n">closest_station</span><span class="p">[</span><span class="s1">&#39;Station ID&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Distance: </span><span class="si">{</span><span class="n">closest_station</span><span class="p">[</span><span class="s1">&#39;Distance&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> km&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Start Date: </span><span class="si">{</span><span class="n">closest_station</span><span class="p">[</span><span class="s1">&#39;Start Date&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;End Date: </span><span class="si">{</span><span class="n">closest_station</span><span class="p">[</span><span class="s1">&#39;End Date&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Elevation Difference: </span><span class="si">{</span><span class="n">closest_station</span><span class="p">[</span><span class="s1">&#39;Elevation Difference&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> m&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No GHCND station with data up to 2024 found within the specified radius.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Closest Station ID: GHCND:USC00018809
+Distance: 31.12 km
+Start Date: 1940-01-01
+End Date: 2024-05-24
+Elevation Difference: 14.00 m
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="downloading-noaa-data">
+<h2>3. Downloading NOAA Data<a class="headerlink" href="#downloading-noaa-data" title="Link to this heading">#</a></h2>
+<p>Once we obtain the closest station with the most up-to-date data records, the next step is to download the data.We define a date range where want to extract data for example, in this case, we shall create a lopp that iterates over each year from 2015 to 2023. According to the code below:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">requests</span></code>: Used to make HTTP requests to the NOAA API.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">station_id</span></code>: Stores the ID of the weather station you want to download data from.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dates_prcp</span></code> and <code class="docutils literal notranslate"><span class="pre">prcp</span></code>: Initialize empty lists to store dates and precipitation data.</p></li>
+</ol>
+<p>The code then iterate Over Years: The loop goes through each year for the defined period (our case from 2015 to 2023 and prints the progress by printing the current year being processed. In the code, we:</p>
+<p><strong>Define API URL and Parameters:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">url</span></code>: The endpoint for the NOAA API.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">params</span></code>:</strong> A dictionary containing parameters for the API request:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">datasetid</span></code>: Specifies the dataset (GHCND for Global Historical Climatology Network Daily).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datatypeid</span></code>: Specifies the data type (PRCP for precipitation).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stationid</span></code>: Specifies the station ID.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">startdate</span></code> and <code class="docutils literal notranslate"><span class="pre">enddate</span></code>: Define the date range for the year.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">limit</span></code>: Limits the number of results (set to 1000).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">units</span></code>: Specifies the units (metric).</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Define Headers:</strong> Includes the <code class="docutils literal notranslate"><span class="pre">token</span></code> for authenticating with the <code class="docutils literal notranslate"><span class="pre">NOAA</span> <span class="pre">API</span></code>.</p>
+<p><strong>Note:</strong> Retries are set to 3 to ensure the <code class="docutils literal notranslate"><span class="pre">API</span> <span class="pre">request</span></code> has multiple chances to succeed in case of temporary issues. The <code class="docutils literal notranslate"><span class="pre">try</span> <span class="pre">block</span></code> attempts the <code class="docutils literal notranslate"><span class="pre">API</span> <span class="pre">request</span></code>, checks its success, and parses the <code class="docutils literal notranslate"><span class="pre">JSON</span> <span class="pre">response</span></code>. If the response contains <code class="docutils literal notranslate"><span class="pre">results</span></code>, it appends the <code class="docutils literal notranslate"><span class="pre">date</span></code> and <code class="docutils literal notranslate"><span class="pre">precipitation</span></code> values to the lists; otherwise, it indicates no data. If exceptions occur, such as <code class="docutils literal notranslate"><span class="pre">RequestException</span></code> or <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>, it prints an <code class="docutils literal notranslate"><span class="pre">error</span></code> message and retries after a <code class="docutils literal notranslate"><span class="pre">5-second</span> <span class="pre">delay</span></code>. If all retry attempts fail, it prints a failure message for that year.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">station_id</span> <span class="o">=</span> <span class="s1">&#39;GHCND:USC00018809&#39;</span> <span class="c1">#The station ID obtained in the previous step</span>
+<span class="n">dates_prcp</span><span class="p">,</span> <span class="n">prcp</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">2024</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Working on year </span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://www.ncdc.noaa.gov/cdo-web/api/v2/data&#39;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;datasetid&#39;</span><span class="p">:</span> <span class="s1">&#39;GHCND&#39;</span><span class="p">,</span> <span class="s1">&#39;datatypeid&#39;</span><span class="p">:</span> <span class="s1">&#39;PRCP&#39;</span><span class="p">,</span> <span class="s1">&#39;stationid&#39;</span><span class="p">:</span> <span class="n">station_id</span><span class="p">,</span>
+        <span class="s1">&#39;startdate&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;enddate&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">-12-31&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;limit&#39;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="s1">&#39;units&#39;</span><span class="p">:</span> <span class="s1">&#39;metric&#39;</span>
+    <span class="p">}</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;token&#39;</span><span class="p">:</span> <span class="n">token</span><span class="p">}</span>
+    
+    <span class="n">retries</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">retries</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+            <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+            <span class="k">if</span> <span class="s1">&#39;results&#39;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
+                <span class="n">dates_prcp</span> <span class="o">+=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;datatype&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;PRCP&#39;</span><span class="p">]</span>
+                <span class="n">prcp</span> <span class="o">+=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;datatype&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;PRCP&#39;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No data found for year </span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">break</span>
+        <span class="k">except</span> <span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">. Retrying...&quot;</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to retrieve data for year </span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2"> after </span><span class="si">{</span><span class="n">retries</span><span class="si">}</span><span class="s2"> attempts.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Working on year 2015
+Working on year 2016
+Working on year 2017
+Working on year 2018
+Working on year 2019
+Working on year 2020
+Working on year 2021
+Working on year 2022
+Working on year 2023
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="combining-datasets">
+<h2>4. Combining Datasets<a class="headerlink" href="#combining-datasets" title="Link to this heading">#</a></h2>
+<p>Once we have extracted data for the specifid period for both <strong><code class="docutils literal notranslate"><span class="pre">NOAA</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">NEON</span></code></strong>, now we merge the two datasets and create a <code class="docutils literal notranslate"><span class="pre">combined</span> <span class="pre">dataframe</span></code>. The code below creates a DataFrame <code class="docutils literal notranslate"><span class="pre">noaa</span></code> from the lists of <code class="docutils literal notranslate"><span class="pre">dates</span></code> and <code class="docutils literal notranslate"><span class="pre">precipitation</span></code> values, converting the dates to datetime format and setting the date as the index. It then groups another DataFrame <strong><code class="docutils literal notranslate"><span class="pre">neon</span></code></strong> by date, aggregates the <code class="docutils literal notranslate"><span class="pre">priPrecipBulk</span></code> values by summing them, rounds them to one decimal place, and renames the column to neon_precip, setting the date as the index. The two DataFrames, neon and noaa, are then merged on their date indices using an inner join, creating a new DataFrame data that contains only the dates present in both DataFrames.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">noaa</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">dates_prcp</span><span class="p">),</span> <span class="s1">&#39;noaa_precip&#39;</span><span class="p">:</span> <span class="n">prcp</span><span class="p">})</span>
+<span class="n">noaa</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">neon</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">date</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s1">&#39;priPrecipBulk&#39;</span><span class="p">:</span> <span class="s1">&#39;sum&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;priPrecipBulk&#39;</span><span class="p">:</span> <span class="s1">&#39;neon_precip&#39;</span><span class="p">})</span>
+<span class="n">neon</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;date&#39;</span>
+
+<span class="c1"># Merge the dataframes on the &#39;date&#39; index</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">neon</span><span class="p">,</span> <span class="n">noaa</span><span class="p">,</span> <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">)</span>
+
+<span class="c1"># Display the merged dataframe</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>neon_precip</th>
+      <th>noaa_precip</th>
+    </tr>
+    <tr>
+      <th>date</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2017-07-14</th>
+      <td>0.4</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2017-07-15</th>
+      <td>0.1</td>
+      <td>14.7</td>
+    </tr>
+    <tr>
+      <th>2017-07-16</th>
+      <td>0.8</td>
+      <td>21.3</td>
+    </tr>
+    <tr>
+      <th>2017-08-07</th>
+      <td>22.8</td>
+      <td>11.7</td>
+    </tr>
+    <tr>
+      <th>2017-08-08</th>
+      <td>10.9</td>
+      <td>9.9</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="data-visualization">
+<h2>5. Data Visualization<a class="headerlink" href="#data-visualization" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="c1"># Resampling data</span>
+<span class="n">m_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;M&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">annual_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">seasonal_data</span> <span class="o">=</span> <span class="n">m_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">m_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">month</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">months</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Jan&#39;</span><span class="p">,</span> <span class="s1">&#39;Feb&#39;</span><span class="p">,</span> <span class="s1">&#39;Mar&#39;</span><span class="p">,</span> <span class="s1">&#39;Apr&#39;</span><span class="p">,</span> <span class="s1">&#39;May&#39;</span><span class="p">,</span> <span class="s1">&#39;Jun&#39;</span><span class="p">,</span> <span class="s1">&#39;Jul&#39;</span><span class="p">,</span> <span class="s1">&#39;Aug&#39;</span><span class="p">,</span> <span class="s1">&#39;Sep&#39;</span><span class="p">,</span> <span class="s1">&#39;Oct&#39;</span><span class="p">,</span> <span class="s1">&#39;Nov&#39;</span><span class="p">,</span> <span class="s1">&#39;Dec&#39;</span><span class="p">]</span>
+<span class="n">seasonal_data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">months</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="c1"># Daily Precipitation</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;neon_precip&#39;</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;NEON-TALL&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;noaa_precip&#39;</span><span class="p">],</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span> <span class="n">station_id</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Daily NOAA and NEON Precipitation&#39;</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Precipitation (mm)&#39;</span><span class="p">)</span>
+
+<span class="c1"># Monthly Precipitation</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">m_data</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">m_data</span><span class="p">[</span><span class="s1">&#39;neon_precip&#39;</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;NEON-TALL&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">m_data</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">m_data</span><span class="p">[</span><span class="s1">&#39;noaa_precip&#39;</span><span class="p">],</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span> <span class="n">station_id</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Monthly NOAA and NEON Precipitation&#39;</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Precipitation (mm)&#39;</span><span class="p">)</span>
+
+<span class="c1"># Annual Precipitation</span>
+<span class="n">annual_data</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">])</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Total Annual Sum&#39;</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Annual Precipitation (mm)&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;NEON-TALL&#39;</span><span class="p">,</span> <span class="n">station_id</span><span class="p">])</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">annual_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Seasonal Precipitation Variations</span>
+<span class="n">seasonal_data</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">])</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Seasonal Precipitation&#39;</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;monthly Precipitation (mm)&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/5042afd35ca962c91ae14ac93d90048f4f72fda889f1daa58f7cbab28b32749e.png" src="_images/5042afd35ca962c91ae14ac93d90048f4f72fda889f1daa58f7cbab28b32749e.png" />
+</div>
+</div>
+</section>
+<section id="summary-statistics">
+<h2>6. Summary Statistics<a class="headerlink" href="#summary-statistics" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+
+<span class="c1"># Summary statistics for both NEON and NOAA stations</span>
+<span class="n">summary_stats</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+
+<span class="c1"># Evaluation metrics</span>
+<span class="n">correlation</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;neon_precip&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;noaa_precip&#39;</span><span class="p">])</span>
+<span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;noaa_precip&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;neon_precip&#39;</span><span class="p">]))</span>
+<span class="n">bias</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;neon_precip&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;noaa_precip&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="c1"># Display the summary statistics</span>
+<span class="n">summary_table</span> <span class="o">=</span> <span class="n">summary_stats</span><span class="p">[[</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">,</span> <span class="s1">&#39;min&#39;</span><span class="p">,</span> <span class="s1">&#39;25%&#39;</span><span class="p">,</span> <span class="s1">&#39;50%&#39;</span><span class="p">,</span> <span class="s1">&#39;75%&#39;</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">]]</span>
+<span class="n">summary_table</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Mean&#39;</span><span class="p">,</span> <span class="s1">&#39;Std Dev&#39;</span><span class="p">,</span> <span class="s1">&#39;Min&#39;</span><span class="p">,</span> <span class="s1">&#39;25th&#39;</span><span class="p">,</span> <span class="s1">&#39;Median&#39;</span><span class="p">,</span> <span class="s1">&#39;75th&#39;</span><span class="p">,</span> <span class="s1">&#39;Max&#39;</span><span class="p">]</span>
+
+<span class="c1"># Add metrics to the summary</span>
+<span class="n">additional_metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;Metric&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Correlation&#39;</span><span class="p">,</span> <span class="s1">&#39;RMSE&#39;</span><span class="p">,</span> <span class="s1">&#39;Bias&#39;</span><span class="p">],</span> <span class="s1">&#39;Value&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">correlation</span><span class="p">,</span> <span class="n">rmse</span><span class="p">,</span> <span class="n">bias</span><span class="p">]})</span>
+
+<span class="c1"># Display the summary statistics</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Daily Summary Stats for NEON and NOAA Precipitation Datasets:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">summary_table</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Evaluation Metrics:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">additional_metrics</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Daily Summary Stats for NEON and NOAA Precipitation Datasets:
+                 Mean    Std Dev  Min  25th  Median  75th    Max
+neon_precip  2.171622   5.200562  0.0   0.2     0.5   1.0   56.7
+noaa_precip  4.139977  11.768334  0.0   0.0     0.0   2.3  171.5
+
+Evaluation Metrics:
+        Metric      Value
+0  Correlation   0.421312
+1         RMSE  10.849670
+2         Bias  -1.968356
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#downloading-neon-data">1. Downloading NEON Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-noaa-ghcnd-station">2. Finding NOAA GHCND Station</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#downloading-noaa-data">3. Downloading NOAA Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-datasets">4. Combining Datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-visualization">5. Data Visualization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-statistics">6. Summary Statistics</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The CWS Lab - Auburn University
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+# Book settings
+
+title: Quantifying NEON Precipitation Uncertainty using NOAA-GHCND
+author: The CWS Lab - Auburn University
+logo: cwsnew.png
+
+# Force re-execution of notebooks on each build.
+execute:
+  execute_notebooks: off
+
+# Information about where the book exists on the web
+repository:
+  url: https://github.com/cwslab/neon_noaa   # Online location of your book
+  
+# Add GitHub buttons to your book
+html:
+  use_issues_button: true
+  use_repository_button: true
